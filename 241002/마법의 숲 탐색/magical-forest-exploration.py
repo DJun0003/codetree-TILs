@@ -45,6 +45,8 @@ def move_angel(cur):
     
         for mr, mc in [[-1, 0], [0, 1], [1, 0], [0, -1]]:
             nr, nc = cr+mr, cc+mc
+            if nr > R+2 or nr < 3 or nc < 0 or nc > C-1:
+                continue
             
             if maps[cr][cc] == 0 and maps[nr][nc] == 1 and visited[nr][nc]==False:
                 visited[nr][nc]=True
@@ -87,14 +89,13 @@ def move(cur):
         elif k==3:
             maps[r][c-1] = 2
         
-        # ans = move_angel(new_cur)-2
-            ans = 0
+        ans = move_angel(new_cur)-2
     return ans
 
 
 answer = 0
 for i in range(K):
     c, e = map(int, input().split())
-    # answer += move([0, c-1, e])
+    answer += move([0, c-1, e])
 
 print(answer)
