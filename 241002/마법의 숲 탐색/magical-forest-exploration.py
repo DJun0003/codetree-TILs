@@ -47,11 +47,10 @@ def move_angel(cur):
             nr, nc = cr+mr, cc+mc
             if nr > R+2 or nr < 3 or nc < 0 or nc > C-1:
                 continue
-            
             if maps[cr][cc] == 0 and maps[nr][nc] == 1 and visited[nr][nc]==False:
                 visited[nr][nc]=True
                 q.append([nr, nc])
-            elif maps[cr][cc]==2 and maps[nr][nc]==0 and visited[nr][nc]==False:
+            elif maps[cr][cc]==2 and (maps[nr][nc]==0 or maps[nr][nc]==2) and visited[nr][nc]==False:
                 visited[nr][nc]=True
                 q.append([nr, nc])
             elif maps[cr][cc]==1:
@@ -68,13 +67,12 @@ def move_angel(cur):
 
 
 def move(cur):
-    new_cur = cur.copy()
     while True:
-        is_move, new_cur = move_(new_cur)
-        if is_move == False or new_cur[0] == R+1:
+        is_move, cur = move_(cur)
+        if is_move == False or cur[0] == R+1:
             break
     
-    r, c, k = new_cur
+    r, c, k = cur
     if r < 4:
         reset_maps()
         ans = 0
@@ -89,7 +87,7 @@ def move(cur):
         elif k==3:
             maps[r][c-1] = 2
         
-        ans = move_angel(new_cur)-2
+        ans = move_angel(cur)-2
     return ans
 
 
