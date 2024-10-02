@@ -1,11 +1,6 @@
 from collections import deque
 
 R, C, K = map(int, input().split())
-angels = []
-for i in range(K):
-    c, e = map(int, input().split())
-    angels.append([0, c-1, e])
-
 maps = [[-1] * C for _ in range(R+3)]
 
 def reset_maps():
@@ -97,7 +92,8 @@ def move(cur):
 
 
 answer = 0
-for cur in angels:
-    answer += move(cur)
+for i in range(K):
+    c, e = map(int, input().split())
+    answer += move([0, c-1, e])
 
 print(answer)
