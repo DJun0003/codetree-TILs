@@ -22,7 +22,7 @@ def move_(cur):
         maps[r][c] = maps[r-1][c] = maps[r][c+1] = -1
         maps[r+1][c-1] = 1
         maps[r+1][c-2] = maps[r+2][c-1] = 0
-        k = k-1 if k-1>0 else 3
+        k = k-1 if k-1>-1 else 3
         return True, [r+1, c-1, k]
     
     # move right-down
@@ -42,6 +42,7 @@ def move_angel(cur):
     max_r = r
     while q:
         cr, cc = q.popleft()
+        # print([cr-2, cc+1], maps[cr][cc])
     
         for mr, mc in [[-1, 0], [0, 1], [1, 0], [0, -1]]:
             nr, nc = cr+mr, cc+mc
@@ -94,6 +95,6 @@ def move(cur):
 answer = 0
 for i in range(K):
     c, e = map(int, input().split())
-    answer += move([0, c-1, e])
+    answer += move([1, c-1, e])
 
 print(answer)
