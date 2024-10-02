@@ -95,6 +95,6 @@ def move(cur):
 answer = 0
 for i in range(K):
     c, e = map(int, input().split())
-    answer += move([0, c-1, e])
+    # answer += move([0, c-1, e])
 
 print(answer)
