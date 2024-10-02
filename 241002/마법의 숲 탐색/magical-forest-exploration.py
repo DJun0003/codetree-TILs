@@ -50,7 +50,7 @@ def move_angel(cur):
             if maps[cr][cc] == 0 and maps[nr][nc] == 1 and visited[nr][nc]==False:
                 visited[nr][nc]=True
                 q.append([nr, nc])
-            elif maps[cr][cc]==2 and (maps[nr][nc]==0 or maps[nr][nc]==2) and visited[nr][nc]==False:
+            elif maps[cr][cc]==2 and maps[nr][nc]!=-1 and visited[nr][nc]==False:
                 visited[nr][nc]=True
                 q.append([nr, nc])
             elif maps[cr][cc]==1:
