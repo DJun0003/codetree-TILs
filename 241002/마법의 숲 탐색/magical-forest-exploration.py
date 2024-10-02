@@ -87,7 +87,8 @@ def move(cur):
         elif k==3:
             maps[r][c-1] = 2
         
-        ans = move_angel(new_cur)-2
+        # ans = move_angel(new_cur)-2
+            ans = 0
     return ans
 
 
