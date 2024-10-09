@@ -45,11 +45,13 @@ def sell():
         print(heapq.heappop(total_products)[1])
 
 def del_product(ids):
-    for i in range(len(total_products)):
-        if ids==total_products[i][1]:
-            del total_products[i]
-            heapq.heapify(total_products)
-            break
+    global total_products
+    new_products = []
+    for product in total_products:
+        if ids==product[1]:
+            continue
+        heapq.heappush(new_products, product)
+    total_products = new_products
         
 def change_start(s):
     global start, total_products, total_costs
