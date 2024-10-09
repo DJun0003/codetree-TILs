@@ -17,6 +17,7 @@ for i in range(1, M+1):
 
 start = 0
 total_products = []
+canceled_products = {}
 total_costs = []
 
 def travel():
@@ -37,21 +38,20 @@ def travel():
 
 def create(ids, rev, des):
     heapq.heappush(total_products, [total_costs[des]-rev, ids, rev, des])
+    canceled_products[ids] = False
      
 def sell():
     if not total_products or total_products[0][0]>0:
         print(-1)
     else:
-        print(heapq.heappop(total_products)[1])
+        product = heapq.heappop(total_products)
+        if canceled_products[product[1]]:
+            sell()
+        else:
+            print(product[1])
 
 def del_product(ids):
-    global total_products
-    new_products = []
-    for product in total_products:
-        if ids==product[1]:
-            continue
-        heapq.heappush(new_products, product)
-    total_products = new_products
+    canceled_products[ids] = True
         
 def change_start(s):
     global start, total_products, total_costs
