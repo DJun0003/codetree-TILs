@@ -1,56 +1,47 @@
 from collections import deque
 L, Q = map(int, input().split())
-cho_list = [{} for _ in range(L)]
-table_list = [[] for _ in range(L)]
-cus_list = [] 
+cho_list = {}
+cus_list = {} 
+
+def eat_chobab(name, loop):
+    x, n = cus_list[name]
+    if x in cho_list[name]:
+        if loop==0:
+            n -= cho_list[name][x]
+        else:
+            key_list = list(cho_list[name].keys())
+
 
 def make_chobab(x, name):
-    if name in cho_list[x]:
-        cho_list[x][name] += 1
+    if name in cho_list:
+        cho_list[name][x] += 1
     else:
-        cho_list[x][name] = 1
+        cho_list[name] = {x:1}
     
-    if table_list[x]:
+    if name in cus_list:
+        if cus_list[name][0] in cho_list[name]:
+            eat_chobab(name, cus_list[name])
         if not eat_chobab(x, x):
             cus_list.remove(x)
 
 
-def eat_chobab(cus_id, table_id):
-    if table_list[cus_id][1] in cho_list[table_id]:
-        table_list[cus_id][2] -= cho_list[table_id][table_list[cus_id][1]]
-        if table_list[cus_id][2] < 0:
-            cho_list[table_id][table_list[cus_id][1]] = -table_list[cus_id][2]
-            table_list[cus_id] = []
-            return False
-        else:
-            cho_list[table_id].pop(table_list[cus_id][1])
-            if table_list[cus_id][2] == 0:
-                table_list[cus_id] = []
-                return False
-            else:
-                return True
-    
-    return True
-            
-
-
 def entry(x, name, n):
-    table_list[x] = [x, name, n]
-    cus_list.append(x)
-    if not eat_chobab(x, x):
-        cus_list.pop()
-        table_list[x] = []
+    cus_list[name] = [x,n]
+    
 
 def take_picture():
     total_chobabs = 0
-    for table in cho_list:
-        total_chobabs += sum(table.values())
-    print(len(cus_list), total_chobabs)
+    for cho in cho_list.values():
+        total_chobabs += sum(cho.values())
+    print(len(cus_list.keys()), total_chobabs)
 
 def circle(t, new_t):
     global cus_list, cho_list
     cir, rest = divmod(new_t - t, L)
     total_t = L+rest if cir>0 else rest
+    for name, [x, n] in cus_list.items():
+        
+    
     for idx in range(1, total_t+1):
         new_cus_list = []
         for x in cus_list:
