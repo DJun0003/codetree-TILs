@@ -15,30 +15,32 @@ for n in range(N):
                 cur_k+=1
     soliders.append([r-1, c-1, h, w, k, k, cur_k])
 
-def check(sol, d):
+def check(sol, d, visited):
     check_list = [False, []]
     if d[0]!=0: # up
         new_r = soliders[sol][0]+d[0] if d[0]==-1 else soliders[sol][0]+soliders[sol][2] 
         if new_r>=L or new_r<0:
-            return check_list
+            return check_list, visited
         for new_c in range(soliders[sol][1], soliders[sol][1]+soliders[sol][3]):
             if maps[new_r][new_c][1] == 2:
-                return check_list
-            elif maps[new_r][new_c][0] > -1:
+                return check_list, visited
+            elif maps[new_r][new_c][0] > -1 and not visited[maps[new_r][new_c][0]]:
                 check_list[1].append(maps[new_r][new_c][0])
+                visited[maps[new_r][new_c][0]] = True
     
     elif d[1]!=0:
         new_c = soliders[sol][1]+d[1] if d[1]==-1 else soliders[sol][1]+soliders[sol][3]
         if new_c>=L or new_c<0:
-            return check_list
+            return check_list, visited
         for new_r in range(soliders[sol][0], soliders[sol][0]+soliders[sol][2]):
             if maps[new_r][new_c][1] == 2:
-                return check_list
-            elif maps[new_r][new_c][0] > -1:
+                return check_list, visited
+            elif maps[new_r][new_c][0] > -1 and not visited[maps[new_r][new_c][0]]:
                 check_list[1].append(maps[new_r][new_c][0])
+                visited[maps[new_r][new_c][0]] = True
     
     check_list[0]=True
-    return check_list
+    return check_list, visited
 
 def move(sol, d, delk):
     if d[0]!=0: # up
@@ -87,14 +89,14 @@ def move(sol, d, delk):
 def move_solider(sol, d):
     if soliders[sol][-2] < 1:
         return False
-    
+
+    visited = [False] * N
     q = deque([[sol]])
     move_q = deque([[sol]])
     while q:
         cur_sol_list = q.popleft()
         for cur_sol in cur_sol_list:
-            can_move, n_sols = check(cur_sol, d)
-            # print(sol, cur_sol, can_move, n_sols)
+            [can_move, n_sols], visited = check(cur_sol, d, visited)
             if not can_move:
                 return False
             if n_sols:
