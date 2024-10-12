@@ -89,7 +89,6 @@ def move(sol, d, delk):
 def move_solider(sol, d):
     if soliders[sol][-2] < 1:
         return False
-
     visited = [False] * N
     visited[sol] = True
     q = deque([[sol]])
@@ -120,17 +119,21 @@ def move_solider(sol, d):
 for _ in range(Q):
     qi, qd = map(int, input().split())
     if qd==0:
-        qdd=[-1,0]
+        qqd = [-1,0]
     elif qd==1:
-        qqd=[0,1]
+        qqd = [0,1]
     elif qd==2:
-        qqd=[1,0]
+        qqd = [1,0]
     elif qd==3:
-        qqd=[0,-1]
+        qqd = [0,-1]
+    # print(qi-1, qd, qqd)
+    
     move_solider(qi-1, qqd)
+    
     # for ll in range(L):
     #     print(maps[ll])
     # print(soliders)
+    
     # print('--')
     # print(maps)
     # print('--')
