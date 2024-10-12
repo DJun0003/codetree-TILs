@@ -19,7 +19,7 @@ def make_chobab(x, name):
         cho_list[name] = {x:1}
 
 def entry(x, name, n):
-    if x in cho_list[name]:
+    if name in cho_list and x in cho_list[name]:
         n -= cho_list[name][x]
         if n<0:
             cho_list[name][x] = -n
