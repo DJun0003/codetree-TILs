@@ -8,7 +8,7 @@ def make_chobab(x, name):
         cus_list[name][1] -= 1
         if cus_list[name][1] == 0:
             cus_list.pop(name)
-            return
+        return
     
     if name in cho_list:
         if x in cho_list[name]:
