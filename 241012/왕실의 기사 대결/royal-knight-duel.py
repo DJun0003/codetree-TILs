@@ -91,8 +91,9 @@ def move_solider(sol, d):
         return False
 
     visited = [False] * N
+    visited[sol] = True
     q = deque([[sol]])
-    move_q = deque([[sol]])
+    move_q = [sol]
     while q:
         cur_sol_list = q.popleft()
         for cur_sol in cur_sol_list:
@@ -101,14 +102,21 @@ def move_solider(sol, d):
                 return False
             if n_sols:
                 q.append(n_sols)
-                move_q.append(n_sols)
+                move_q+=n_sols
     
+    if d[0]!=0:
+        move_q.sort(key=lambda x: soliders[x][0]*d[0])
+    elif d[1]!=0:
+        move_q.sort(key=lambda x: soliders[x][1]*d[1])
+    # print(move_q)
     while move_q:
-        cur_sol_list = move_q.pop()
-        for cur_sol in cur_sol_list:
-            move(cur_sol, d, True if move_q else False)
+        cur_sol = move_q.pop()
+        move(cur_sol, d, True if move_q else False)
     
-    
+# for ll in range(L):
+#     print(maps[ll])
+# print(soliders)
+
 for _ in range(Q):
     qi, qd = map(int, input().split())
     if qd==0:
@@ -120,6 +128,8 @@ for _ in range(Q):
     elif qd==3:
         qqd=[0,-1]
     move_solider(qi-1, qqd)
+    # for ll in range(L):
+    #     print(maps[ll])
     # print(soliders)
     # print('--')
     # print(maps)
