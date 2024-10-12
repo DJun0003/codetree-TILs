@@ -68,6 +68,7 @@ def move(sol, d, delk):
         soliders[sol][1] = soliders[sol][1]+d[1]
         
         for new_r in range(soliders[sol][0], soliders[sol][0]+soliders[sol][2]):
+            print(new_r, new_c)
             maps[new_r][new_c][0] = sol
             if maps[new_r][new_c][1]==1:
                 soliders[sol][-1]+=1
