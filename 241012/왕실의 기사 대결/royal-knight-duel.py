@@ -48,7 +48,7 @@ def move(sol, d, delk):
         elif d[0]==-1:
             rm_r = soliders[sol][0]+soliders[sol][2]-1
             new_r = soliders[sol][0]+d[0]
-        soliders[sol][0] = soliders[sol][0]+d[0]
+        soliders[sol][0] += d[0]
         
         for new_c in range(soliders[sol][1], soliders[sol][1]+soliders[sol][3]):
             maps[new_r][new_c][0] = sol
@@ -68,7 +68,6 @@ def move(sol, d, delk):
         soliders[sol][1] = soliders[sol][1]+d[1]
         
         for new_r in range(soliders[sol][0], soliders[sol][0]+soliders[sol][2]):
-            print(new_r, new_c)
             maps[new_r][new_c][0] = sol
             if maps[new_r][new_c][1]==1:
                 soliders[sol][-1]+=1
@@ -100,12 +99,10 @@ def move_solider(sol, d):
                 return False
             if n_sols:
                 q.append(n_sols)
-                move_q.appendleft(n_sols)
+                move_q.append(n_sols)
     
     while move_q:
-        cur_sol_list = move_q.popleft()
-        if not cur_sol_list:
-            continue
+        cur_sol_list = move_q.pop()
         for cur_sol in cur_sol_list:
             move(cur_sol, d, True if move_q else False)
     
