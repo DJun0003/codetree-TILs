@@ -17,11 +17,9 @@ for n in range(N):
 
 def check(sol, d):
     check_list = [False, []]
-    if d[0] == 1 or d[0]==-1: # up
-        new_r = soliders[sol][0]+d[0]
-        if d[0]==1:
-            new_r+= soliders[sol][2]-1
-        if new_r==L or new_r==-1:
+    if d[0]!=0: # up
+        new_r = soliders[sol][0]+d[0] if d[0]==-1 else soliders[sol][0]+soliders[sol][2] 
+        if new_r>=L or new_r<0:
             return check_list
         for new_c in range(soliders[sol][1], soliders[sol][1]+soliders[sol][3]):
             if maps[new_r][new_c][1] == 2:
@@ -29,12 +27,9 @@ def check(sol, d):
             elif maps[new_r][new_c][0] > -1:
                 check_list[1].append(maps[new_r][new_c][0])
     
-    elif d[1] == 1 or d[1]==-1:
-        new_c = soliders[sol][1]+d[1]
-        if d[1]==1:
-            new_c+= soliders[sol][3]-1
-        # print(soliders[sol][0], new_c)
-        if new_c==L or new_c==-1:
+    elif d[1]!=0:
+        new_c = soliders[sol][1]+d[1] if d[1]==-1 else soliders[sol][1]+soliders[sol][3]
+        if new_c>=L or new_c<0:
             return check_list
         for new_r in range(soliders[sol][0], soliders[sol][0]+soliders[sol][2]):
             if maps[new_r][new_c][1] == 2:
@@ -46,34 +41,38 @@ def check(sol, d):
     return check_list
 
 def move(sol, d, delk):
-    if d[0]==1 or d[0]==-1: # up
-        bf_r = soliders[sol][0]
-        new_r = bf_r+d[0]
-        soliders[sol][0] = new_r
+    if d[0]!=0: # up
         if d[0]==1:
-            new_r+= soliders[sol][2]-1
+            rm_r = soliders[sol][0]
+            new_r = soliders[sol][0]+soliders[sol][2]
+        elif d[0]==-1:
+            rm_r = soliders[sol][0]+soliders[sol][2]-1
+            new_r = soliders[sol][0]+d[0]
+        soliders[sol][0] = soliders[sol][0]+d[0]
         
         for new_c in range(soliders[sol][1], soliders[sol][1]+soliders[sol][3]):
             maps[new_r][new_c][0] = sol
             if maps[new_r][new_c][1]==1:
                 soliders[sol][-1]+=1
-            maps[bf_r][new_c][0] = -1
-            if maps[bf_r][new_c][1]==1:
+            maps[rm_r][new_c][0] = -1
+            if maps[rm_r][new_c][1]==1:
                 soliders[sol][-1]-=1
         
-    elif d[1] == 1 or d[1]==-1: # up
-        bf_c = soliders[sol][1]
-        new_c = bf_c+d[1]
-        soliders[sol][1] = new_c
+    elif d[1]!=0: # up
         if d[1]==1:
-            new_c+= soliders[sol][3]-1
+            rm_c = soliders[sol][1]
+            new_c = soliders[sol][1]+soliders[sol][3]
+        elif d[1]==-1:
+            rm_c = soliders[sol][1]+soliders[sol][3]-1
+            new_c = soliders[sol][1]+d[1]
+        soliders[sol][1] = soliders[sol][1]+d[1]
         
         for new_r in range(soliders[sol][0], soliders[sol][0]+soliders[sol][2]):
             maps[new_r][new_c][0] = sol
             if maps[new_r][new_c][1]==1:
                 soliders[sol][-1]+=1
-            maps[new_r][bf_c][0] = -1
-            if maps[new_r][bf_c][1]==1:
+            maps[new_r][rm_c][0] = -1
+            if maps[new_r][rm_c][1]==1:
                 soliders[sol][-1]-=1
     
     if delk:
